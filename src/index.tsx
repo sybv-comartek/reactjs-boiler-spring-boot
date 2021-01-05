@@ -6,7 +6,6 @@ import store from "src/redux/store";
 import { BrowserRouter } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
 import routes from "./router";
-
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>{renderRoutes(routes)}</Provider>

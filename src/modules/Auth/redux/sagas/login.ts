@@ -3,6 +3,7 @@
 import { put } from "redux-saga/effects";
 import { LoginAction } from "../action-types";
 import { loginError } from "../actions";
+import { login } from "@modules/Auth/services";
 // import { getAuthLocalData, setAuthData } from '@/helpers/token';
 // import { getHistory, getRedirectUrl } from '@/helpers/history';
 // import { NotificationSuccess } from '@commons/components/Notification';
@@ -12,9 +13,9 @@ import { loginError } from "../actions";
 
 export function* loginAsync(action: LoginAction) {
   try {
-    // const payload = yield apis.login(action.payload.username, action.payload.password);
+    const payload = yield login(action.payload);
     // yield put(loginSuccess(payload.login));
-    console.log("sdfksajdkjfvkasvfjvss");
+    console.log(payload);
   } catch (error) {
     yield put(loginError(error));
   }
