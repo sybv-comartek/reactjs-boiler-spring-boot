@@ -11,12 +11,12 @@ export interface LoginInput {
 
 export interface UserInfo {
   token: string;
-  refreshToken: string;
-  uid: string;
-  expiresAt: number;
-  refreshTokenExpiresAt: number;
-  isAutoLogin?: boolean;
-  redirectUrl?: string;
+  // refreshToken: string;
+  // uid: string;
+  // expiresAt: number;
+  // refreshTokenExpiresAt: number;
+  // isAutoLogin?: boolean;
+  // redirectUrl?: string;
 }
 
 export interface LoginState {

@@ -6,49 +6,41 @@ import { put } from "redux-saga/effects";
 import { LoginAction, LoginActionSuccess } from "../action-types";
 import { loginError, loginSuccess } from "../actions";
 // import { getAuthLocalData, setAuthData } from '@/helpers/token';
-// import { getHistory, getRedirectUrl } from '@/helpers/history';
-// import { NotificationSuccess } from '@commons/components/Notification';
-// import { CommonPath } from '@commons/base-routes';
+import { getHistory, getRedirectUrl } from "@/helpers/history";
+import { NotificationSuccess } from "@commons/components/Notification";
+import { CommonPath } from "@commons/base-routes";
 
 // const TOKEN_KEY = env.tokenKey;
 
 export function* loginAsync(action: LoginAction) {
   try {
     const payload = yield login(action.payload);
-    yield put(loginSuccess(payload.login));
-    console.log(payload);
+    yield put(loginSuccess(payload));
   } catch (error) {
     yield put(loginError(error));
   }
 }
 export function loginSuccessAsync(action: LoginActionSuccess) {
-  console.log(action);
+  const data = action.payload;
+  if (!data?.token) {
+    NotificationSuccess("Thông báo", "Đăng nhập thành công");
+  }
+  const redirectUrl = getRedirectUrl();
+  if (redirectUrl) {
+    const rUrl = new URL(redirectUrl);
+    const cOrigin = window.location.origin;
+    if (cOrigin === rUrl.origin) {
+      const newPath = rUrl.pathname + rUrl.search;
+      if (newPath.indexOf(CommonPath.LOGIN_PATH) === 0) {
+        getHistory().replace(CommonPath.DEFAULT_PATH);
+      } else {
+        getHistory().replace(newPath);
+      }
+    } else {
+      window.location.href = redirectUrl;
+    }
+  } else getHistory().push(CommonPath.DEFAULT_PATH);
 }
-
-// export function loginSuccessAsync(action: LoginActionSuccess) {
-//   const data = action.payload;
-
-//   if (!data?.isAutoLogin) {
-//     setAuthData(data);
-//     NotificationSuccess('Thông báo', 'Đăng nhập thành công');
-//   }
-
-//   const redirectUrl = getRedirectUrl();
-//   if (redirectUrl) {
-//     const rUrl = new URL(redirectUrl);
-//     const cOrigin = window.location.origin;
-//     if (cOrigin === rUrl.origin) {
-//       const newPath = rUrl.pathname + rUrl.search;
-//       if (newPath.indexOf(CommonPath.LOGIN_PATH) === 0) {
-//         getHistory().replace(CommonPath.DEFAULT_PATH);
-//       } else {
-//         getHistory().replace(newPath);
-//       }
-//     } else {
-//       window.location.href = redirectUrl;
-//     }
-//   } else getHistory().push(CommonPath.DEFAULT_PATH);
-// }
 
 // export function* autoLoginFlow() {
 //   while (1) {
