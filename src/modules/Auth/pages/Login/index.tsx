@@ -24,7 +24,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="contai d-flex align-items-center justify-content-center">
+    <div className="contai bg-dark d-flex align-items-center justify-content-center">
       <Card
         style={{
           width: 500,

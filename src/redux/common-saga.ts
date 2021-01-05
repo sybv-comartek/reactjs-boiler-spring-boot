@@ -11,7 +11,8 @@ export function* checkErrorAsync() {
     );
     NotificationError(
       "Cảnh báo",
-      action.payload.message || "Có lỗi xảy ra vui lòng thử lại sau"
+      action.payload.response.data.message ||
+        "Có lỗi xảy ra vui lòng thử lại sau"
     );
   }
 }

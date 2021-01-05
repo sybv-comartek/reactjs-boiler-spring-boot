@@ -8,11 +8,10 @@ export const login = async (action: LoginInput) => {
       email: action.email,
       password: action.password,
     },
-  })
-    .then((res) => {
-      return res.data;
-    })
-    .catch((error) => {
-      return error.response.data.message;
-    });
+  }).then((res) => {
+    return res.data;
+  });
+  // .catch((error) => {
+  //   return error.response.data.message;
+  // });
 };

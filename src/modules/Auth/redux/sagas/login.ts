@@ -1,9 +1,10 @@
 // import env from '@/env';
 // import * as apis from '@modules/Auth/services/apis';
-import { put } from "redux-saga/effects";
-import { LoginAction } from "../action-types";
-import { loginError } from "../actions";
 import { login } from "@modules/Auth/services";
+import { put } from "redux-saga/effects";
+// import { LoginAction,LoginActionSuccess,LOGOUT } from "../action-types";
+import { LoginAction, LoginActionSuccess } from "../action-types";
+import { loginError, loginSuccess } from "../actions";
 // import { getAuthLocalData, setAuthData } from '@/helpers/token';
 // import { getHistory, getRedirectUrl } from '@/helpers/history';
 // import { NotificationSuccess } from '@commons/components/Notification';
@@ -14,11 +15,14 @@ import { login } from "@modules/Auth/services";
 export function* loginAsync(action: LoginAction) {
   try {
     const payload = yield login(action.payload);
-    // yield put(loginSuccess(payload.login));
+    yield put(loginSuccess(payload.login));
     console.log(payload);
   } catch (error) {
     yield put(loginError(error));
   }
+}
+export function loginSuccessAsync(action: LoginActionSuccess) {
+  console.log(action);
 }
 
 // export function loginSuccessAsync(action: LoginActionSuccess) {
